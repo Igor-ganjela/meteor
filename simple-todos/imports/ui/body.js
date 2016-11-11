@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
  
 import { Tasks } from '../api/tasks.js';
  
+import './task.js';
 import './body.html';
  
 Template.body.helpers({
@@ -9,8 +10,7 @@ Template.body.helpers({
     // Show newest tasks at the top
     return Tasks.find({}, { sort: { createdAt: -1 } });
   },
-});
- 
+}); 
 Template.body.events({
   'submit .new-task'(event) {
     // Prevent default browser form submit
