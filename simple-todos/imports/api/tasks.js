@@ -16,17 +16,24 @@ if (Meteor.isServer) {
     });
   });
 }
-Meteor.methods({
-  'tasks.insert'(text) {
-    check(text, String);
  
+Meteor.methods({
+  'tasks.insert'(text,desc, date) {
+      check(text, String);   
+      check(desc, String); 
+
     // Make sure the user is logged in before inserting a task
     if (! this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+   if (!text) {
       throw new Meteor.Error('not-authorized');
     }
  
     Tasks.insert({
       text,
+      desc,
+      date,
       createdAt: new Date(),
       owner: this.userId,
       username: Meteor.users.findOne(this.userId).username,
